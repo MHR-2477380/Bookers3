@@ -1,0 +1,1 @@
+$('#post_comment-<%= @book.id %>').html("<%= j(render 'books/post_comment', { book: @book, post_comment: @post_comment }) %>")

@@ -1,0 +1,5 @@
+$('#comment_form').html("<%= j(render 'books/post_comment_form', { book: @book, post_comment: @post_comment_new }) %>");
+$('#post_comment-<%= @book.id %>').html("<%= j(render 'books/post_comment', { book: @book, post_comment: @post_comment }) %>");
+
+// 下記の記述でコメント入力後のフォームを空にしている
+$("textarea").val('');

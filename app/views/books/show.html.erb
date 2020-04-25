@@ -1,0 +1,76 @@
+<div class="container">
+
+	<div class="row">
+
+		<div class="col-xs-3">
+
+			<!-- 部分テンプレート -->
+			<%= render 'users/side', book: @newbook, user: @user %>
+
+		</div>
+
+		<div class="col-xs-9">
+
+			<p class="text-left"><%= flash[:notice] %></p>
+
+			<h2>Book detail</h2>
+
+			<table class="table table-hover table-inverse">
+				<tbody>
+					<tr>
+						<td class="text-center">
+
+							<%= link_to user_path(@book.user) do %>
+								<%= attachment_image_tag @book.user, :profile_image, :fill, 40, 40, format: 'jpeg', fallback: "no_image.jpg", size: '40x40' %><br>
+								<%= @book.user.name %>
+							<% end %>
+
+						</td>
+
+						<td class="text-center"><%= @book.title %></td>
+
+						<td class="text-center"><%= @book.body %></td>
+
+						<td class="text-center">
+							<%= @book.post_comments.count %>件のコメント
+						</td>
+
+						<td id="favorite-<%= @book.id %>">
+
+							<!-- いいねの部分テンプレート -->
+							<%= render 'books/favorite', book: @book %>
+
+						</td>
+
+						<td class="text-center">
+
+							<% if @book.user.id == current_user.id %>
+								<%= link_to "Edit", edit_book_path(@book), class:"btn btn-success" %>
+							<% end %>
+
+						</td>
+
+						<td class="text-center">
+
+							<% if @book.user.id == current_user.id %>
+								<%= link_to "Destroy", book_path(@book), method: :delete, "data-confirm" => "Are you sure?", class:"btn btn-danger" %>
+							<% end %>
+
+						</td>
+
+					</tr>
+				</tbody>
+			</table>
+
+			<!-- コメント入力フォーム -->
+			<div id="comment_form">
+				<%= render 'books/post_comment_form', book: @book,  post_comment: @post_comment %>
+			</div>
+
+			<!-- コメント一覧表示 -->
+				<div id="post_comment-<%= @book.id %>">
+					<%= render 'books/post_comment', book: @book, post_comment: @post_comment　%>
+				</div>
+		</div>
+	</div>
+</div>

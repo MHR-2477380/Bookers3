@@ -1,0 +1,71 @@
+<div class="container">
+
+	<div class="row">
+
+		<div class="col-xs-1"></div>
+
+		<div class="col-xs-10">
+
+			<h2>follow</h2>
+
+			<table class="table table-hover table-inverse">
+				<thead>
+					<tr>
+						<th>image</th>
+						<th>name</th>
+						<th>follow</th>
+						<th>follower</th>
+						<th colspan="3"></th>
+					</tr>
+				</thead>
+				<tbody>
+
+					<% @users.each do |user| %>
+
+						<tr>
+
+							<td>
+								<%= attachment_image_tag user, :profile_image, :fill, 40, 40, format: 'jpeg', fallback: "no_image.jpg", size: '40x40' %>
+							</td>
+
+							<td>
+								<%= user.name %>
+							</td>
+
+							<td>
+								<%= user.followings.count %>人
+							</td>
+
+							<td>
+								<%= user.followers.count %>人
+							</td>
+
+							<td>
+								<%= link_to "Show", user_path(user) %>
+							</td>
+
+							<td>
+								<!-- フォローボタンの実装 -->
+								<% if current_user != user %>
+								<!-- ログインしているユーザが@userと等しくない場合を判定している -->
+
+									<% if user.followed_by?(current_user) %>
+										<!-- userにネストさせているルーティングなのでuserのidを渡してあげる。 -->
+										<p><%=link_to "フォローを外す", user_relationships_path(user), method: :delete %></p>
+									<% else %>
+										<p><%=link_to "フォロー", user_relationships_path(user), method: :post %></p>
+									<% end %>
+
+								<% end %>
+							</td>
+						</tr>
+
+					<% end %>
+				</tbody>
+			</table>
+		</div>
+
+		<div class="col-xs-1"></div>
+
+	</div>
+</div>
