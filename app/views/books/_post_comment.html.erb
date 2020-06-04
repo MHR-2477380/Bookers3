@@ -7,7 +7,9 @@
 <% book.post_comments.each do |post_comment| %>
 
 	<div class="comment-text">
-		<span class="comment-user"><%= post_comment.user.name %></span>
+		<span class="comment-user">
+			<%= link_to post_comment.user.name, user_path(post_comment.user) %>
+		</span>
 	</div>
 
 	<br>
